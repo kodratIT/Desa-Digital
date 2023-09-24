@@ -23,11 +23,15 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'data.kk']);
         Permission::create(['name' => 'data.desa']);
         Permission::create(['name' => 'jenis.surat']);
+        Permission::create(['name' => 'cetak.surat']);
         Permission::create(['name' => 'pengajuan.index']);
         Permission::create(['name' => 'pengajuan.create']);
         Permission::create(['name' => 'pengajuan.update']);
         Permission::create(['name' => 'laporan.index']);
         Permission::create(['name' => 'laporan.create']);
         Permission::create(['name' => 'laporan.update']);
+        Permission::create(['name' => 'data.rw']);
+        Permission::create(['name' => 'digital.signature']);
+
     }
 }

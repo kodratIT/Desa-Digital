@@ -19,13 +19,13 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('profile.save',Crypt::encrypt($user->id)) }}" method="post">
+                    <form action="{{ route('profile.save',Crypt::encrypt($user->id)) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="name">Nama Lengkap</label>
-                                <input type="text" name="name" id="name" class="form-control" value="{{ $user->name }}">
+                                <input type="text" name="name" id="name" class="form-control" value="{{ $member->name }}" readonly>
                                 @error('name')
                                     <span class="text-danger">Periksa Data</span>
                                 @enderror
@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="nik">NIK</label>
-                                <input type="text" name="nik" id="nik" class="form-control" value="{{ $user->nik }}" disabled>
+                                <input type="text" name="nik" id="nik" class="form-control" value="{{ $member->no_nik }}" disabled>
                                 @error('nik')
                                     <span class="text-danger">Periksa Data</span>
                                 @enderror
@@ -53,6 +53,18 @@
                                     <span class="text-danger">Periksa Data</span>
                                 @enderror
                             </div>
+                            @can('digital.signature')
+                            <div class="form-group">
+                                <label for="signature">Digital Signature</label>
+                                @if($user->digital_signature)
+                                    <img src="{{ asset('signature/' . $user->digital_signature) }}" alt="Signature" class="w-50 block mx-auto">
+                                @endif
+                                <input type="file" name="signature" id="signature" class="form-control" value="{{ $user->digital_signature }}" placeholder="Masukan Nomor">
+                                @error('signature')
+                                <span class="text-danger">Periksa Data</span>
+                                @enderror
+                            </div>
+                            @endcan
                         </div>
                     </div>
                     <div class="text-end mt-4">
@@ -76,31 +88,19 @@
                             <span>Lengkapi Profile Anda Terlebih Dahulu! </span>
                         </div>                      
                     @endif
+                    @if ($member == null)
+                    
+                    
+                        
+                    
+                
                     <form action="{{ route('profile.update',Crypt::encrypt(Auth()->User()->id)) }}" method="post">
                         @csrf
                         <div class="row">
-                            {{-- <div class="col-lg-6 col-12">
-                                <div class="form-group">
-                                    <label for="name">Nama Lengkap</label>
-                                    <input type="text" name="name" id="name" class="form-control" placeholder="Masukan Nama" value="{{ $user->name }}">
-                                    @error('name')
-                                        <span class="text-danger">Periksa Data</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-12">
-                                <div class="form-group">
-                                    <label for="phone">Nomor HP/Whatsapp</label>
-                                    <input type="text" name="phone" id="phone" class="form-control" placeholder="Masukan Nomor HP" value="">
-                                    @error('phone')
-                                    <span class="text-danger">Periksa Data</span>
-                                    @enderror
-                                </div>
-                            </div> --}}
                                 <div class="col-lg-6 col-12">
                                     <div class="form-group">
                                         <label for="agama">Agama</label>
-                                        <select name="agama" id="agama" class="form-control select2">
+                                        <select name="agama" id="agama" class="form-control select2" >
                                             <option value="" {{ $member->agama === null ? 'selected' : '' }}>Pilih Agama</option>
                                             <option value="Islam" {{ $member->agama === 'Islam' ? 'selected' : '' }}>Islam</option>
                                             <option value="Kristen" {{ $member->agama === 'Kristen' ? 'selected' : '' }}>Kristen</option>
@@ -199,6 +199,38 @@
                             <button class="btn btn-success mt-5 ">Simpan</button>
                         </div>
                     </form>
+                    @else
+                    <div class="row">
+                        <div class="col-lg-6 col-12">
+                            <label for="agama1">Agama</label>
+                            <input type="text" name="" id="agama1" class="form-control" value="{{ $member->agama }}" readonly>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <label for="jk">Jenis Kelamin</label>
+                            <input type="text" name="" id="jk" class="form-control" value="{{ $member->jenis_kelamin }}" readonly>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <label for="tmpt_lahir">Tempat Lahir</label>
+                            <input type="text" name="" id="tmpt_lhir" class="form-control" value="{{ $member->tempat_lahir }}" readonly>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <label for="tgl_lhir">Tanggal Lahir</label>
+                            <input type="text" name="" id="tgl_lhir" class="form-control" value="{{ $member->tanggal_lahir }}" readonly>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <label for="pendidikan1">Pendidikan</label>
+                            <input type="text" name="" id="pendidikan1" class="form-control" value="{{ $member->pendidikan }}" readonly>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <label for="pk">Pekerjaan</label>
+                            <input type="text" name="" id="pk" class="form-control" value="{{ $member->pekerjaan }}" readonly>
+                        </div>
+                        <div class="col-12">
+                            <label for="status1">Status</label>
+                            <input type="text" name="" id="status1" class="form-control" value="{{ $member->status }}" readonly>
+                        </div>
+                    </div>
+                    @endif
 
                 </div>
             </div>

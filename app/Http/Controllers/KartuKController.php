@@ -7,6 +7,7 @@ use App\Models\ModelKk;
 use App\Models\ModelRt;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\ModelDesa;
+use App\Models\ModelRw;
 use App\Models\ModelFamily;
 
 class KartuKController extends Controller
@@ -20,6 +21,8 @@ class KartuKController extends Controller
     {
         $Kk = ModelKk::join('rukun_tetangga','rukun_tetangga.id','=','card_family.id_rt')
             ->join('vilages','vilages.id','=','card_family.id_desa')
+            ->join('rukun_warga','rukun_warga.id','=','card_family.id_rw')
+            ->select('card_family.*','vilages.name_desa','rukun_warga.no_rw','rukun_tetangga.no_rt')
             ->get();
         $let = ModelKk::first();
         $breadcrumb = "Kartu Keluarga";
@@ -37,8 +40,9 @@ class KartuKController extends Controller
         $breadcrumb = "Tambah Kartu Keluarga";
         $user = Auth()->User();
         $rt = ModelRt::all();
+        $rw = ModelRw::all();
         $desa = ModelDesa::all();
-        return view('pages.kartu-keluarga.create',compact('breadcrumb','user','rt','desa'));
+        return view('pages.kartu-keluarga.create',compact('breadcrumb','user','rt','desa','rw'));
     }
 
     /**
@@ -59,6 +63,7 @@ class KartuKController extends Controller
 
         ModelKk::create([
             'id_rt'     => $request->rt,
+            'id_rw'     => $request->rw,
             'id_desa'     => $request->desa,
             'no_kk'   => $request->no_kk,
             'alamat_kk' => $request->alamat
@@ -147,7 +152,7 @@ class KartuKController extends Controller
     public function destroy($id)
     {
         $url = Decrypt($id);
-        $data = ModelKk::where('no_kk',$url);
+        $data = ModelKk::find($url);
 
         $data->delete();
         
@@ -173,10 +178,17 @@ class KartuKController extends Controller
                     ->join('vilages','vilages.id','=','card_family.id_desa')
                     ->join('members_card_family','members_card_family.id','card_family.id')
                     ->join('users','users.id','=','members_card_family.user_id')
-                    ->select('users.name','users.nik','users.created_at as dibuat','vilages.name_desa','rukun_tetangga.no_rt')
+                    ->join('rukun_warga','rukun_warga.id','=','card_family.id_rw')
+                    ->select('members_card_family.name','members_card_family.no_nik as nik','users.created_at as dibuat','vilages.name_desa','rukun_tetangga.no_rt','rukun_warga.no_rw','users.phone')
                     ->get();
             // dd($data);
         }else{
+            $data = ModelKk::join('rukun_tetangga','rukun_tetangga.id','=','card_family.id_rt')
+                ->join('vilages','vilages.id','=','card_family.id_desa')
+                ->join('members_card_family','members_card_family.id','card_family.id')
+                ->join('users','users.id','=','members_card_family.user_id')
+                ->select('members_card_family.name','members_card_family.no_nik as nik','users.created_at as dibuat','vilages.name_desa','rukun_tetangga.no_rt')
+                ->get();
             
         }
 

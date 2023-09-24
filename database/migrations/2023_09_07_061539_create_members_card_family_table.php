@@ -15,15 +15,18 @@ return new class extends Migration
     {
         Schema::create('members_card_family', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users');
             $table->foreignId('no_kk')->references('id')->on('card_family');
-            $table->String('tempat_lahir')->nullable();
-            $table->String('agama')->nullable();
-            $table->date('tanggal_lahir')->nullable();
-            $table->String('jenis_kelamin')->nullable();
-            $table->String('pendidikan')->nullable();
-            $table->String('pekerjaan')->nullable();
-            $table->String('status')->nullable();
+            $table->string('name');
+            $table->string('no_nik',16)->unique();
+            $table->String('tempat_lahir');
+            $table->String('agama');
+            $table->date('tanggal_lahir');
+            $table->String('jenis_kelamin');
+            $table->String('pendidikan');
+            $table->String('pekerjaan');
+            $table->String('geojson')->nullable();
+            $table->String('status');
             $table->timestamps();
         });
     }

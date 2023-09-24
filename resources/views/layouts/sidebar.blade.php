@@ -48,11 +48,19 @@
                 @endcan
                 
                 <li class="slide">
+                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('webgis') }}"><i
+                            class="side-menu__icon fe fe-map-pin"></i><span
+                            class="side-menu__label">WebGIS PBB</span></a>
+                </li>
+                <li class="slide">
                     <a class="side-menu__item has-link" data-bs-toggle="slide" href="#commingsoon"><i
                             class="side-menu__icon fe fe-shield"></i><span
                             class="side-menu__label">Mitigasi Bencana</span></a>
                 </li>
                 @role(['admin','super-admin'])
+                <li class="sub-category">
+                    <h3>Administrator</h3>
+                </li>
                 <li class="slide">
                     <a class="side-menu__item has-link" data-bs-toggle="slide" href="#"><i
                         class="side-menu__icon fe fe-database"></i><span
@@ -81,6 +89,12 @@
                                             @can('data.rt')
                                             <li><a href="{{ route('manage.data-rt.index') }}" class="slide-item">Data RT</a></li>
                                             @endcan
+                                            @can('data.rw')
+                                            <li><a href="{{ route('manage.data-rw.index') }}" class="slide-item">Data RW</a></li>
+                                            @endcan
+                                            @can('data.master')
+                                            <li><a href="{{route('admin.users.index')}}" class="slide-item">User</a></li>
+                                            @endcan
                                         </ul>
                                     </div>
                                 </div>
@@ -99,11 +113,8 @@
                 
                 @can('data.master')
 
-                <li class="sub-category">
-                    <h3>Administrator</h3>
-                </li>
                 
-                <li class="slide">
+                {{-- <li class="slide">
                     <a class="side-menu__item has-link" data-bs-toggle="slide" href="#"><i
                         class="side-menu__icon fe fe-database"></i><span
                         class="side-menu__label">Data Master</span><i
@@ -123,7 +134,7 @@
                             </div>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
                 @endcan
 
                 @can('manage.access')

@@ -35,6 +35,7 @@
                                     <th>No KK</th>
                                     <th>Desa</th>
                                     <th>No RT</th>
+                                    <th>No RW</th>
                                     <th>Alamat</th>
                                     <th>Dibuat</th>
                                     <th>Diupdate</th>
@@ -53,6 +54,7 @@
                                         <td>{{ $i->no_kk }}</td>
                                         <td>{{ $i->name_desa }}</td>
                                         <td>{{ $i->no_rt }}</td>
+                                        <td>{{ $i->no_rw }}</td>
                                         <td>{{ $i->alamat_kk }}</td>
                                         <td>{{ $i->created_at }}</td>
                                         <td>{{ $i->updated_at }}</td>
@@ -71,13 +73,13 @@
                                                                 </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <i class="fe fe-alei-circle fs-70 text-waring lh-1 my-4 d-inline-block"></i>
+                                                            <i class="fe fe-alert-circle fs-70 text-waring lh-1 my-4 d-inline-block"></i>
                                                             <h4 class="text-danger mb-20">Data Akan di Hapus
                                                             </h4>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button class="btn btn-gray" data-bs-dismiss="modal">Batal</button>
-                                                            <form action="{{route('manage.kartukeluarga.destroy',Crypt::encrypt($i->no_kk))}}" method="post" class="inline-block">
+                                                            <form action="{{route('manage.kartukeluarga.destroy',Crypt::encrypt($i->id))}}" method="post" class="inline-block">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button class="btn btn-danger badge " type="submit" name="action"><i class="fa fa-trash"></i> Hapus Data</button>

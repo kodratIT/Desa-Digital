@@ -151,15 +151,34 @@ class UserController extends Controller
     public function save(Request $request, $id){
         $url = decrypt($id);
 
-        $data = $request->validate([
-            'name'     => 'required',
-            'phone'   => 'required',
-        ]);;
         $user = Auth()->User();
-        $user->update([
-            'phone' => $request->phone  ,
-            'name'  => $request->name,
-        ]);
+        $role = $user->getRoleNames();
+        if($role[0] != 'admin'){
+            $data = $request->validate([
+                'phone'   => 'required',
+            ]);;
+            $user->update([
+                'phone' => $request->phone  ,
+            ]);
+        }else{
+            $request->validate([
+                'signature' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'phone' => 'required' 
+            ]);
+
+             // Get the image file from the request
+            $image = $request->file('signature');
+
+            // Generate a unique name for the image
+            $signature = time() . '_' . $image->getClientOriginalName();
+
+            $image->move(public_path('signature'), $signature);
+
+            $user->update([
+                'phone' => $request->phone  ,
+                'digital_signature' => $signature  
+            ]);
+        }
 
         return back()->with('success','Data Berhasil Di Update');
     }

@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="pt-2 ">
+                            <div class="pt-2 text-end">
                                 <button type="submit" class="btn btn-success text-white"> Simpan</button>
                             </div>
                         </form>

@@ -23,7 +23,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-12">
                                     <div class="form-group">
-                                        <label for="jenis_surat">Jenis Surat Pengajuan</label>
+                                        <label for="jenis_surat">Jenis Surat Pengajuan<span class="text-danger">*</span> </label>
                                         <select name="jenis_surat" id="jenis_surat" class="form-control select2">
                                             <option value="">Pilih Jenis Surat</option>
                                             @foreach ($jenis_surat as $item)
@@ -35,8 +35,17 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="keterangan">Keterangan <span class="text-danger">*</span></label>
+                                        <textarea name="keterangan" id="keterangan" cols="30" rows="10" class="form-control" placeholder="Untuk Keperluan ..."></textarea>
+                                        @error('keterangan')
+                                            <span class="text-danger">Masukan data yang benar</span>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
-                            <div class="pt-2 ">
+                            <div class="pt-2 text-end ">
                                 <button type="submit" class="btn btn-success text-white"> Simpan</button>
                             </div>
                         </form>

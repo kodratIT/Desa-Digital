@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('no_kk',20)->unique();
             $table->biginteger('id_rt');
+            $table->biginteger('id_rw');
             $table->biginteger('id_desa');
             $table->String('alamat_kk');
             $table->timestamps();

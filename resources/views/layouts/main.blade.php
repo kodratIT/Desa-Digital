@@ -33,6 +33,7 @@
     <!-- INTERNAL Switcher css -->
     <link href="{{ url('assets/switcher/css/switcher.css') }}" rel="stylesheet">
     <link href="{{ url('assets/switcher/demo.css') }}" rel="stylesheet">
+    @yield('style')
 
 </head>
 

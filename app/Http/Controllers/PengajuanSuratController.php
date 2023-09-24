@@ -26,7 +26,7 @@ class PengajuanSuratController extends Controller
             ->first();
 
         $roles = $user->getRoleNames();
-        if($user->status != null){
+        if($user->phone != null){
             if($roles['0'] == 'user'){
                 $dump = ModelPengajuan::where('id_user',$data->id)->first();
                 if($dump == null){
@@ -34,22 +34,21 @@ class PengajuanSuratController extends Controller
                 }else{
                     $pengajuan = ModelPengajuan::where('pengajuan_surat.id_user',$data->id)
                         ->join('users','users.id','=','pengajuan_surat.id_user')
+                        ->join('members_card_family','members_card_family.user_id','users.id')
                         ->join('typeletter','typeletter.id','pengajuan_surat.id_jenis_surat')
-                        ->select('users.*','pengajuan_surat.*','typeletter.name as nama_surat')
+                        ->select('members_card_family.name','pengajuan_surat.status_surat','pengajuan_surat.created_at','typeletter.name as nama_surat')
                         ->get();
                 }
 
-            }elseif($roles['0'] == 'admin'){
+            }else{
                 $pengajuan = ModelPengajuan::join('users','users.id','=','pengajuan_surat.id_user')
                 ->join('typeletter','typeletter.id','=','pengajuan_surat.id_jenis_surat')
                 ->join('members_card_family','members_card_family.user_id','users.id')
                 ->join('card_family','card_family.id','=','members_card_family.no_kk')
                 ->join('vilages','vilages.id','=','card_family.id_desa')
                 ->join('rukun_tetangga','rukun_tetangga.id','=','card_family.id_rt')
-                ->select('pengajuan_surat.*','users.name','users.nik','typeletter.name as nama_surat','vilages.name_desa','rukun_tetangga.no_rt')
+                ->select('pengajuan_surat.*','members_card_family.name','members_card_family.no_nik','typeletter.name as nama_surat','vilages.name_desa','rukun_tetangga.no_rt')
                 ->get();           
-            }else{
-
             }
             return view('pages.pengajuan.index',compact('breadcrumb','user','pengajuan'));
 
@@ -81,13 +80,15 @@ class PengajuanSuratController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'jenis_surat' => 'required'
+            'jenis_surat' => 'required',
+            'keterangan' => 'required'
         ]);
 
         $user = Auth()->User();
         ModelPengajuan::create([
             'id_user'   => $user->id,
             'id_jenis_surat' => $request->jenis_surat,
+            'pesan'     => $request->keterangan,
             'status_surat'  => 'Menunggu Persetujuan'
         ]);
 
@@ -122,12 +123,13 @@ class PengajuanSuratController extends Controller
             ->join('card_family','card_family.id','=','members_card_family.no_kk')
             ->join('vilages','vilages.id','=','card_family.id_desa')
             ->join('rukun_tetangga','rukun_tetangga.id','=','card_family.id_rt')
-            ->select('users.name','users.nik','card_family.no_kk as kk','vilages.*','rukun_tetangga.*','members_card_family.*','pengajuan_surat.*')
+            ->select('members_card_family.name','card_family.no_kk as kk','vilages.*','rukun_tetangga.*','members_card_family.*','pengajuan_surat.*')
             ->first();
             
         $admin = ModelPengajuan::where('pengajuan_surat.id',$url)
             ->join('users','users.id','=','pengajuan_surat.id_admin')
-            ->select('users.name as admin')
+            ->join('members_card_family','members_card_family.user_id','=','users.id')
+            ->select('members_card_family.name as admin')
             ->first();
 
         $letter = ModelLetter::all();
@@ -148,7 +150,6 @@ class PengajuanSuratController extends Controller
         $data->update([
             'id_admin'     => Auth()->User()->id,
             'status_surat' => $request->status,
-            'pesan'        => $request->des
         ]);
 
         return redirect()->route('manage.pengajuan.index')->with('success','Pengajuan Berhasil Di Verifikasi!');
@@ -176,7 +177,7 @@ class PengajuanSuratController extends Controller
         ->join('vilages','vilages.id','=','card_family.id_desa')
         ->join('rukun_tetangga','rukun_tetangga.id','=','card_family.id_rt')
         ->join('typeletter','typeletter.id','=','pengajuan_surat.id_jenis_surat')
-        ->select('users.name','users.nik','card_family.alamat_kk as alamat','rukun_tetangga.no_rt as nort','members_card_family.tempat_lahir','members_card_family.tanggal_lahir','members_card_family.jenis_kelamin','members_card_family.pendidikan','members_card_family.status','members_card_family.pekerjaan','members_card_family.agama','typeletter.name as jenis_surat','pengajuan_surat.created_at as dibuat')
+        ->select('members_card_family.*','typeletter.name as jenis_surat','pengajuan_surat.created_at as dibuat','card_family.alamat_kk','pengajuan_surat.pesan')
         ->first();
         
         $admin = ModelPengajuan::where('pengajuan_surat.id',$url)
@@ -185,7 +186,7 @@ class PengajuanSuratController extends Controller
         ->join('card_family','card_family.id','=','members_card_family.no_kk')
         ->join('vilages','vilages.id','=','card_family.id_desa')
         ->join('rukun_tetangga','rukun_tetangga.id','=','card_family.id_rt')
-        ->select('users.name as admin','rukun_tetangga.no_rt','vilages.name_desa')
+        ->select('members_card_family.name as admin','rukun_tetangga.no_rt','vilages.name_desa','users.digital_signature as signature')
         ->first();
 
         // return view('surat_pengantar',compact('data','admin'));

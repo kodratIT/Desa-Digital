@@ -7,14 +7,20 @@ use App\Models\ModelKk;
 
 class NokkNotRegistered implements Rule
 {
+    protected $nokk;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($nik,$nokk)
     {
-        //
+        $data = ModelKk::where('card_family.no_kk',$nokk)
+        ->join('members_card_family','members_card_family.no_kk','=','card_family.id')
+        ->where('members_card_family.no_nik',$nik)
+        ->first();
+
+        $this->nokk = $data;
     }
 
     /**
@@ -27,7 +33,12 @@ class NokkNotRegistered implements Rule
     public function passes($attribute, $value)
     {
          // Cek apakah nomor KK sudah terdaftar dalam database
-         return  ModelKk::where('no_kk', $value)->exists();
+         if($this->nokk != null){
+            return true;
+         }else{
+            return false;
+         }
+         
     }
 
     /**
@@ -37,6 +48,6 @@ class NokkNotRegistered implements Rule
      */
     public function message()
     {
-        return 'Nomor KK belum terdaftar.';
+        return 'NO KK Tidak Ditemukan.';
     }
 }

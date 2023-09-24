@@ -11,6 +11,8 @@ use App\Http\Controllers\SuratController;
 use App\Http\Controllers\KartuKController;
 use App\Http\Controllers\DesaController;
 use App\Http\Controllers\RtController;
+use App\Http\Controllers\RwController;
+use App\Http\Controllers\WebGisController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +29,15 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+// Route::get('/coba', function () {
+//     $admin= null;
+//     $user = null;
+
+//     return view('surat_pengantar', compact('admin', 'user'));
+// });
+
+Route::get('/webgis-pbb',[WebGisController::class,'index'])->name('webgis');
+
 
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
@@ -66,8 +77,8 @@ Route::name('manage.')->prefix('manage')->group(function () {
     route::get('/laporan',[LaporanController::class,'index'])->middleware('auth','permission:laporan.index')->name('laporan.index');
     route::get('/laporan/create',[LaporanController::class,'create'])->middleware('auth','permission:laporan.create')->name('laporan.create');
     route::post('/laporan/store',[LaporanController::class,'store'])->middleware('auth','permission:laporan.create')->name('laporan.store');
-    route::get('/laporan/{id}',[LaporanController::class,'edit'])->middleware('auth','permission:laporan.edit')->name('laporan.edit');
-    route::put('/laporan/edit/{id}',[LaporanController::class,'update'])->middleware('auth','permission:laporan.edit')->name('laporan.update');
+    route::get('/laporan/{id}',[LaporanController::class,'show'])->middleware('auth','permission:laporan.update')->name('laporan.edit');
+    route::put('/laporan/edit/{id}',[LaporanController::class,'update'])->middleware('auth','permission:laporan.update')->name('laporan.update');
 });
 
 Route::middleware('auth','role:super-admin')->name('manage.')->prefix('manage')->group(function(){
@@ -75,4 +86,5 @@ Route::middleware('auth','role:super-admin')->name('manage.')->prefix('manage')-
     route::resource('/kartukeluarga',KartuKController::class);
     route::resource('/data-desa',DesaController::class);
     route::resource('/data-rt',RtController::class);
+    route::resource('/data-rw',RwController::class);
 });

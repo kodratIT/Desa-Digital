@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Rules\NokkNotRegistered;
+use App\Rules\NikUnique;
 use App\Models\ModelKk;
 use App\Models\ModelFamily;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -53,12 +54,16 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'nik' => ['required', 'string', 'max:16', 'unique:users'],
-            'nokk' => ['required', 'string', 'max:16', new NokkNotRegistered],
+            'nik' => ['required', 'string', 'max:16', new NikUnique($data['nik'])],
+            'no_kk' => ['required', 'string', 'max:16', new NokkNotRegistered($data['nik'],$data['no_kk'])],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'agree' => ['required', 'accepted'], // Validasi untuk persetujuan
+        ], [
+            'agree.required' => 'Anda harus menyetujui persyaratan dan ketentuan.',
+            'agree.accepted' => 'Anda harus menyetujui persyaratan dan ketentuan.',
         ]);
+        
     }
 
     /**
@@ -69,18 +74,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {   
-        $kk   = ModelKk::where('no_kk',$data['nokk'])->first();
+        
         $user = User::create([
-            'name' => $data['name'],
-            'nik'   => $data['nik'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-        ])->assignRole('user');;
-
-        ModelFamily::create([
-            'user_id'   => $user->id,
-            'no_kk'     => $kk->id,
+        ])->assignRole('user');
+            
+        $data   = ModelFamily::where('no_nik',$data['nik'])->first();
+            
+        $data->update([
+            'user_id'   => $user->id
         ]);
+        
         return $user;
     }
 }

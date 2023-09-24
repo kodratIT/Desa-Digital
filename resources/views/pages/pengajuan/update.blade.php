@@ -32,7 +32,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                 <label for="nik">NIK</label>
-                                <input type="text" name="nik" id="nik" value="{{ $data->nik }}" disabled class="form-control">
+                                <input type="text" name="nik" id="nik" value="{{ $data->no_nik }}" disabled class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-6">

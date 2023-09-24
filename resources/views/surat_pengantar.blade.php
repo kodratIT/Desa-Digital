@@ -63,7 +63,7 @@
     <div class="header">
         <h2>KETUA RUKUN TETANGGA {{ $admin->no_rt }}</h2>
         <h2>KECAMATAN MESTONG</h2>
-        <h2>DESA {{ $admin->name_desa }}</h2>
+        <h2>DESA {{ hurufUpper($admin->name_desa) }}</h2>
     </div>
     <div class="alamat">
         <div class="garis"></div>
@@ -85,7 +85,7 @@
                     <td>N.I.K</td>
                     <td></td>
                     <td class="px-2">:</td>
-                    <td class="px-2" >{{ $data->nik }}</td>
+                    <td class="px-2" >{{ $data->no_nik }}</td>
                 </tr>
                 <tr>
                     <td>Tempat/tanggal lahir </td>
@@ -109,13 +109,13 @@
                     <td>Alamat</td>
                     <td></td>
                     <td class="px-2">:</td>
-                    <td class="px-2">{{ $data->alamat }}</td>
+                    <td class="px-2">{{ $data->alamat_kk }}</td>
                 </tr>
                 <tr>
-                    <td>Keperluan</td>
+                    <td class="text-start">Keperluan</td>
                     <td></td>
                     <td class="px-2">:</td>
-                    <td class="px-2" >Pembuatan <strong>{{ $data->jenis_surat }}</strong></td>
+                    <td class="px-2" >Pembuatan <u>{{ $data->jenis_surat }}</u> yang akan digunakan {{ $data->pesan }}</td>
                 </tr>
             </tbody>
           </table>
@@ -131,8 +131,8 @@
                     <td>
                         Pondok Meja,{{ formatDate($data->dibuat, 'd F Y') }} 
                         <p class="">Ketua RT. {{ $admin->no_rt }}</p>
-
-                        <P class="mt-5">{{ $admin->admin }}</P>
+                        <img src="{{ asset('signature/' . $admin->signature) }}" alt="Signature" class="w-25" loading="lazy">
+                        <P class="mt-1">{{ $admin->admin }}</P>
                     </td>
                 </tr>
             </tbody>

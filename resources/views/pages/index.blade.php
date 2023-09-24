@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    @if($user->status == null)
+    @if($user->phone == null)
         <div class="alert alert-warning">
             <span>Lengkapi Profile Anda Terlebih Dahulu! <a href="{{ route('profile') }}" class="text-warning fw-bold">Ke Profile</a></span>
         </div>                      

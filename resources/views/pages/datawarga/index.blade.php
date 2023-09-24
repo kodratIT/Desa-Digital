@@ -33,9 +33,7 @@
                                         <th>RT/RW</th>
                                         <th>Desa</th>
                                         <th>Dibuat</th>
-                                        @can('data.warga.update')
                                         <th>Aksi</th>
-                                        @endcan
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,11 +42,11 @@
                                          <td>{{ $loop->iteration }}</td>
                                         <td>{{ $i->nik }}</td>
                                         <td>{{ $i->name }}</td>
-                                        <td>{{ $i->no_rt }}</td>
+                                        <td>{{ $i->no_rt }}/{{ $i->no_rw }}</td>
                                         <td>{{ $i->name_desa }}</td>
                                         <td>{{ formatDate($i->dibuat) }}</td>
                                         @can('data.warga.update')
-                                        <td class="d-flex justify-content-center border-0">
+                                            <td class="d-flex justify-content-center border-0">
                                             <a href="{{route('admin.roles.edit',1)}}" class="btn btn-sm btn-primary badge  mx-2"><i class="fe fe-edit"></i></a>
                                             <form action="{{route('admin.roles.destroy',1)}}" method="post" class="inline-block">
                                                 @csrf
@@ -57,6 +55,9 @@
                                             </form>
                                         </td>
                                         @endcan
+                                        <td>
+                                            <a href="https://wa.me/{{ $i->phone }}" class="btn btn-sm btn-success fs-10">  <i class="fe fe-phone"></i></a>
+                                        </td>
                                      </tr>
                                      @endforeach
                                    

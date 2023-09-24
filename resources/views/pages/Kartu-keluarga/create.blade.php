@@ -44,7 +44,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-12">
+                                <div class="col-lg-4 col-12">
                                     <div class="form-group">
                                         <label for="rt">No RT</label>
                                         <select name="rt" id="rt" class="form-control select2">
@@ -58,7 +58,21 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-12">
+                                <div class="col-lg-4 col-12">
+                                    <div class="form-group">
+                                        <label for="rw">No RW</label>
+                                        <select name="rw" id="rw" class="form-control select2">
+                                            <option value="">Pilih No Rw</option>
+                                            @foreach ($rw as $r)
+                                            <option value="{{ $r->id }}">{{ $r->no_rw }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('rt')
+                                            <span class="text-danger">Masukan data yang benar</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-4  col-12">
                                     <div class="form-group">
                                         <label for="desa">Desa</label>
                                         <select name="desa" id="desa" class="form-control select2">
@@ -118,6 +132,7 @@
 <script>
     $(document).ready(function () {
         $('#rt').select2();
+        $('#rw').select2();
         $('#desa').select2();
     });
 </script>

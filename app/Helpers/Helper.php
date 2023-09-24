@@ -6,3 +6,7 @@ if (!function_exists('formatDate')) {
         return \Carbon\Carbon::parse($date)->format($format);
     }
 }
+
+function hurufUpper($text){
+    return strtoupper($text);
+}

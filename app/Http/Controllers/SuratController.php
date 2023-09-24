@@ -14,8 +14,8 @@ class SuratController extends Controller
      */
     public function index()
     {
-        $latters = ModelLetter::join('users','users.id','=','typeletter.user_id')
-            ->Select('typeletter.*','users.name as username')
+        $latters = ModelLetter::join('members_card_family','members_card_family.user_id','=','typeletter.user_id')
+            ->Select('typeletter.*','members_card_family.name as username')
             ->get();
 
         $let = ModelLetter::first();
