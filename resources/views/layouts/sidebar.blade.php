@@ -48,7 +48,7 @@
                 @endcan
                 
                 <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('webgis') }}"><i
+                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('manage.webgis.index') }}"><i
                             class="side-menu__icon fe fe-map-pin"></i><span
                             class="side-menu__label">WebGIS PBB</span></a>
                 </li>

@@ -39,7 +39,9 @@
                                         <th>Nama</th>
                                         <th>Pesan</th>
                                         <th>Dibuat</th>
+                                        @can('laporan.update')
                                         <th>aksi</th>
+                                        @endcan
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -56,6 +58,7 @@
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->title }}</td>
                                             <td>{{ $item->created_at }}</td>
+                                            @can('laporan.update')
                                             <td class="d-flex justify-content-center border-0">
                                                 <a href="{{route('manage.laporan.edit',Crypt::encrypt($item->id))}}" class="btn btn-sm btn-primary badge  mx-2"><i class="fe fe-edit"></i></a>
                                                 @can('laporan.delete')
@@ -66,6 +69,7 @@
                                                 </form>
                                                 @endcan
                                             </td>
+                                            @endcan
                                         </tr>
                                     @endforeach
                                     @endif

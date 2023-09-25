@@ -32,6 +32,9 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'laporan.update']);
         Permission::create(['name' => 'data.rw']);
         Permission::create(['name' => 'digital.signature']);
+        Permission::create(['name' => 'webgis.index']);
+        Permission::create(['name' => 'webgis.create']);
+        Permission::create(['name' => 'webgis.update']);
 
     }
 }

@@ -45,8 +45,11 @@
                                             @if ($role->permissions )
                                             <div class="d-flex">
                                                     @foreach ($role->permissions as $role_permission)
-                                                        <div class=" btn-sm btn-success  mx-2">{{$role_permission->name}}</div>
+                                                     @if ($loop->iteration <= 5)
+                                                     <div class=" btn-sm btn-success  mx-2">{{$role_permission->name}}</div>
+                                                     @endif
                                                     @endforeach
+                                                    ...
                                                 </div>
                                             @endif
                                         </td>

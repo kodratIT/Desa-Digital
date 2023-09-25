@@ -55,13 +55,13 @@
                     <div class="card-body">
                        @if ($role->permissions )
                         <div class="d-flex">
+
                                 @foreach ($role->permissions as $role_permission)
                                 <form action="{{route('admin.roles.permissions.revoke',[$role->id,$role_permission->id])}}" method="post"  class="" title="Delete" data-toggle="tooltip">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class=" btn-sm btn-danger-light mt-2 mb-5 mx-2">{{$role_permission->name}}</i></a></button>
                                 </form>
-                                
                                 @endforeach
                             </div>
                             @endif

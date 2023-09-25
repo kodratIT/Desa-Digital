@@ -36,7 +36,7 @@ Auth::routes();
 //     return view('surat_pengantar', compact('admin', 'user'));
 // });
 
-Route::get('/webgis-pbb',[WebGisController::class,'index'])->name('webgis');
+
 
 
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
@@ -88,3 +88,10 @@ Route::middleware('auth','role:super-admin')->name('manage.')->prefix('manage')-
     route::resource('/data-rt',RtController::class);
     route::resource('/data-rw',RwController::class);
 });
+Route::name('manage.')->prefix('manage')->group(function(){
+    Route::get('/webgis-pbb',[WebGisController::class,'index'])->middleware('auth','permission:webgis.index')->name('webgis.index');
+    Route::get('/webgis-pbb/create',[WebGisController::class,'create'])->middleware('auth','permission:webgis.create')->name('webgis.create');
+    Route::post('/webgis-pbb/store',[WebGisController::class,'store'])->middleware('auth','permission:webgis.create')->name('webgis.store');
+    Route::get('/webgis-pbb/json',[WebGisController::class,'json'])->middleware('auth')->name('json-data');
+});
+
