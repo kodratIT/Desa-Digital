@@ -257,7 +257,7 @@ function editLayerByID(layerID) {
 editLayerByID(1);
 
 $(document).ready(function() {
-  $.getJSON('{{ route('manage.json-data') }}', function(data) {
+  $.getJSON('{{ env('APP_URL')}}/manage/webgis-pbb/json', function(data) {
     $.each(data, function(index, item) {
         const geojsonUrl = '{{ asset('geojson') }}/' + item.geojson;
 
