@@ -159,7 +159,7 @@
 						<div class="banner-text">
 
 							<h1 class="wow fadeInUp" data-wow-offset="10" data-wow-duration="1s" data-wow-delay="0s">
-								Manajemen <br>Administrari Desa  
+								Manajemen <br>Administrasi Desa  
 							</h1>
 							
 							<p class="wow fadeInUp" data-wow-offset="10" data-wow-duration="1s" data-wow-delay="0.3s">
