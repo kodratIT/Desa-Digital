@@ -26,16 +26,19 @@ class LaporanController extends Controller
             ->select('users.*','members_card_family.name','card_family.id_rt','card_family.id_desa')
             ->first();
 
+            // dd($user);
+
         $role = $users->getRoleNames();
         if($users->phone != null){
             if($role[0] == 'admin'){
                 // ambil data laporan untuk admin
                 $data = ModelLaporan::join('members_card_family', 'members_card_family.user_id', '=', 'laporan_warga.id_user')
                     ->join('card_family','card_family.id','members_card_family.no_kk')
-                    ->where('card_family.id_rt',$user->id_rt)
                     ->where('card_family.id_desa',$user->id_desa)
+                    ->where('card_family.id_rt',$user->id_rt)
                     ->select('members_card_family.name','members_card_family.no_nik','laporan_warga.*','card_family.id_rt','card_family.id_desa')
                     ->get();
+      
                 return view('pages.Laporan.index',compact('breadcrumb','user','data'));   
             }elseif($role[0] == 'supe-admin'){
                 // ambil data laporan untuk super admin

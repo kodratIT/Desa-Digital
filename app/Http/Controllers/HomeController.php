@@ -9,6 +9,7 @@ use App\Models\ModelRt;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\ModelDesa;
 use App\Models\ModelFamily;
+use App\Models\ModelLaporan;
 use App\Models\ModelPengajuan;
 
 class HomeController extends Controller
@@ -36,8 +37,9 @@ class HomeController extends Controller
         $user = User::where('users.id',$data->id)
             ->join('members_card_family','members_card_family.user_id','=','users.id')
             ->join('card_family','card_family.id','=','members_card_family.no_kk')
-            ->select('users.*','card_family.no_kk','members_card_family.*')
+            ->select('users.*','card_family.no_kk','members_card_family.*' ,'card_family.id_rt','card_family.id_desa')
             ->first();
+
 
         if($roles[0] == 'admin'){
 
@@ -72,10 +74,17 @@ class HomeController extends Controller
             ->select('card_family.id')
             ->get();
 
+            $result3 = ModelLaporan::join('members_card_family', 'members_card_family.user_id', '=', 'laporan_warga.id_user')
+                    ->join('card_family','card_family.id','members_card_family.no_kk')
+                    ->where('card_family.id_desa',$user->id_desa)
+                    ->where('card_family.id_rt',$user->id_rt)
+                    ->select('members_card_family.name','members_card_family.no_nik','laporan_warga.*','card_family.id_rt','card_family.id_desa')
+                    ->count();
+
           
             $jumlahWarga = $result->count();
             $jmhpengajuan = $result1->count();
-            $jmhlaporan =0;
+            $jmhlaporan =$result3;
             $jmhkk = $result2->count();
             
             
@@ -99,11 +108,14 @@ class HomeController extends Controller
                     ->join('card_family','card_family.id','=','members_card_family.no_kk')
                     ->where('card_family.no_kk',$user->no_kk)
                     ->get();
-
+            $result3 = ModelLaporan::where('id_user',Auth()->User()->id)->count();
+            $dump = ModelFamily::where('user_id', Auth()->user()->id)->first();
+            $result4 = ModelFamily::where('no_kk', $dump->no_kk)->count();
+          
             $jmhpengajuan = $result->count();
             $jumlahWarga = $result2->count();
-            $jmhlaporan =0;
-            $jmhkk = 0;
+            $jmhlaporan =$result3;
+            $jmhkk = $result4;
         
             return view('pages.index',compact('breadcrumb','user','jumlahWarga','jmhpengajuan','jmhlaporan','jmhkk'));
         }

@@ -16,4 +16,9 @@ class ModelLaporan extends Model
     {
         return $this->belongsTo(ModelFamily::class, 'user_id', 'id_user');
     }
+
+
+    public function CountLaporan(){
+        return $this->s;
+    }
 }

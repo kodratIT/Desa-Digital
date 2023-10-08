@@ -31,7 +31,7 @@
                                     @endrole
                                     @role('user')
                                     <h6 class="">Total Keluarga</h6>
-                                    <h2 class="mb-0 number-font">{{ $jumlahWarga }}</h2>
+                                    <h2 class="mb-0 number-font">{{ $jmhkk }}</h2>
                                     @endrole
                                 </div>
                                 <div class="ms-auto">

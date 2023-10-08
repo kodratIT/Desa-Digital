@@ -17,7 +17,7 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body style="background-image:url('assets/img/bg.jpg')" class="p-1">
+<body style="background-image:url('assets/img/bg.jpg')" class="p-2">
 
     <div class="wrapper">
         @yield('content')

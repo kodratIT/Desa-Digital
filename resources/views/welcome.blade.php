@@ -58,6 +58,29 @@
 		<!-- Color schema -->
 		<link rel="stylesheet" href="{{ asset('frontend/assets/colors/blue.css') }}" class="colors">
 		
+		<style>
+			/* CSS for mobile devices (up to 767px) */
+			@media (max-width: 767px) {
+				.responsive-image {
+					height: 350px; 
+				}
+			}
+		
+			/* CSS for tablets and small desktop screens (768px - 991px) */
+			@media (min-width: 768px) and (max-width: 991px) {
+				.responsive-image {
+					height: 250px; /* Maintain aspect ratio */
+				}
+			}
+		
+			/* CSS for larger desktop screens (992px and above) */
+			@media (min-width: 992px) {
+				.responsive-image {
+					height: 250px; /* Maintain aspect ratio */
+				}
+			}
+		</style>
+
 	</head>
 
 	<body>
@@ -113,18 +136,28 @@
 							<!-- Items -->
 							<ul class="nav-menu d-lg-flex flex-wrap list-unstyled justify-content-center">
 								
+								@if (Auth()->User() == null)
+									
 								<li class="nav-item">
 									<a class="nav-link js-scroll-trigger " href="{{ route('login') }}">
 										<span>Masuk</span>
 									</a>
-                                 
+									
 								</li>
 								<li class="nav-item">
 									<a class="nav-link js-scroll-trigger " href="{{ route('register') }}">
 										<span>Daftar</span>
 									</a>
-                                 
+									
 								</li>
+								@else
+								<li class="nav-item">
+									<a class="nav-link js-scroll-trigger " href="{{ route('dashboard') }}">
+										<span>Dashboard</span>
+									</a>
+									
+								</li>
+								@endif
 							
 
 								<li class="nav-item search-option">
@@ -297,18 +330,17 @@
 					</div>
 				</div>
 			
-				<div class="row">
-					
+				<div class="row mb-4 justify-content-center">
 					<!-- Member 1 -->
 					<div class="col-12 col-md-6 col-lg-3">
 						<div class="team-member res-margin">
 							<div class="team-image">
-                           
+								<img src="{{ asset('assets/img/team/1.jpg') }}" alt="" class="responsive-image">
 								<div class="team-social">
 									<div class="team-social-inner">
 										<a href="#"><i class="fab fa-twitter"></i></a>
-										<a href="#"><i class="fab fa-facebook-f"></i></a>
-										<a href="#"><i class="fab fa-linkedin-in"></i></a>
+										<a href="https://instagram.com/kodrat__"><i class="fab fa-instagram"></i></a>
+										<a href="https://www.linkedin.com/in/kodrat"><i class="fab fa-linkedin-in"></i></a>
 										<a href="#"><i class="fab fa-dribbble"></i></a>
 									</div>
 								</div>
@@ -319,12 +351,13 @@
 							</div>
 						</div>
 					</div>
-					
+				</div>
+				<div class="row">					
 					<!-- Member 2 -->
-					<div class="col-12 col-md-6 col-lg-2">
+					<div class="col-12 col-md-6 col-lg-3">
 						<div class="team-member res-margin">
 							<div class="team-image">
-								
+								<img src="{{ asset('assets/img/team/cik.jpg') }}" alt="" class="responsive-image">
 								<div class="team-social">
 									<div class="team-social-inner">
 										<a href="#"><i class="fab fa-twitter"></i></a>
@@ -342,10 +375,10 @@
 					</div>	
 					
 					<!-- Member 3 -->
-					<div class="col-12 col-md-6 col-lg-2">
+					<div class="col-12 col-md-6 col-lg-3">
 						<div class="team-member res-margin">
 							<div class="team-image">
-								
+								<img src="{{ asset('assets/img/team/sun.jpg') }}" alt="" class="responsive-image">
 								<div class="team-social">
 									<div class="team-social-inner">
 										<a href="#"><i class="fab fa-twitter"></i></a>
@@ -363,10 +396,10 @@
 					</div>
 					
 					<!-- Member 4 -->
-					<div class="col-12 col-md-6 col-lg-2">
+					<div class="col-12 col-md-6 col-lg-3">
 						<div class="team-member">
 							<div class="team-image">
-								
+								<img src="{{ asset('assets/img/team/cla.jpg') }}" alt=""class="responsive-image">
 								<div class="team-social">
 									<div class="team-social-inner">
 										<a href="#"><i class="fab fa-twitter"></i></a>
@@ -386,7 +419,7 @@
 					<div class="col-12 col-md-6 col-lg-3">
 						<div class="team-member">
 							<div class="team-image">
-								
+								<img src="{{ asset('assets/img/team/ir.jpg') }}" alt="" class="responsive-image">
 								<div class="team-social">
 									<div class="team-social-inner">
 										<a href="#"><i class="fab fa-twitter"></i></a>

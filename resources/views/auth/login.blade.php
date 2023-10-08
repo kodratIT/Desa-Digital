@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<form action="{{ route('login') }}" method="POST">
+<form action="{{ route('login') }}" method="POST" >
     @csrf
     <h1>Login</h1>
     
@@ -34,7 +34,7 @@
                 {{ __('Remember Me') }}
             </label>
         </div>
-        <a href="#">Forgot Password?</a>
+        {{-- <a href="#">Forgot Password?</a> --}}
     </div>
 
     <button type="submit" class="btn btn-primary">Sign in</button>

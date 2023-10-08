@@ -24,10 +24,12 @@
                         </div>
                         <div class="form-group mt-2">
                             <label >Pesan</label>
-                            <textarea name="" id="" cols="30" rows="10" readonly class="form-control">{{ $data->pesan }}</textarea>
+                            <textarea name="" id="" cols="10" rows="3" readonly class="form-control">{{ $data->pesan }}</textarea>
                         </div>
-                        <label for="">Bukti Foto</label>
-                        <img src="{{ url('uploads/'.$data->bukti) }}" alt="" class="img-fluid mt-2"> 
+                        <div class="form-group justify-content-center ">
+                           <p>bukti foto</p>
+                            <img src="{{ url('uploads/'.$data->bukti) }}" alt="" class="img-fluid mt-2 "> 
+                        </div>
                     </div>
                 </div>
             </div>

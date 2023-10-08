@@ -3,14 +3,19 @@
     <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
     <div class="app-sidebar">
         <div class="side-header">
-            {{-- <a class="header-brand1" href="index.html">
-                <img src="../assets/images/brand/logo-white.png" class="header-brand-img desktop-logo" alt="logo">
-                <img src="../assets/images/brand/icon-white.png" class="header-brand-img toggle-logo"
-                    alt="logo">
-                <img src="../assets/images/brand/icon-dark.png" class="header-brand-img light-logo" alt="logo">
-                <img src="../assets/images/brand/logo-dark.png" class="header-brand-img light-logo1"
+            {{-- <a class="logo-horizontal " href="index.html">
+                <img src="{{ asset('assets/img/logo_light.png') }}" class="header-brand-img desktop-logo" alt="logo">
+                <img src="{{ asset('assets/img/Logo.png') }}" class="header-brand-img light-logo1"
                     alt="logo">
             </a> --}}
+            <a class="header-brand1" href="/">
+                <img src="{{ asset('assets/img/logo_light.png') }}" class="header-brand-img desktop-logo " alt="logo" >
+                <img src="{{ asset('assets/img/logo_light.png') }}" class="header-brand-img toggle-logo"
+                    alt="logo">
+                <img src="{{ asset('assets/img/logo_light.png') }}" class="header-brand-img light-logo h-50" alt="logo">
+                <img src="{{ asset('assets/img/logo_light.png') }}" class="header-brand-img light-logo1"
+                    alt="logo" height="150px">
+            </a>
             <!-- LOGO -->
         </div>
         <div class="main-sidemenu">
@@ -52,11 +57,11 @@
                             class="side-menu__icon fe fe-map-pin"></i><span
                             class="side-menu__label">WebGIS PBB</span></a>
                 </li>
-                <li class="slide">
+                {{-- <li class="slide">
                     <a class="side-menu__item has-link" data-bs-toggle="slide" href="#commingsoon"><i
                             class="side-menu__icon fe fe-shield"></i><span
                             class="side-menu__label">Mitigasi Bencana</span></a>
-                </li>
+                </li> --}}
                 @role(['admin','super-admin'])
                 <li class="sub-category">
                     <h3>Administrator</h3>
