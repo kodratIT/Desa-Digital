@@ -58,13 +58,11 @@
                           <input type="text"  id="info_tahun" class="form-control m-0 w-100 fs-13"  readonly>
                         </div>
                       </div>
-                      @can('webgis.create')
                       <div class="col-12">                  
                         <div class="form-group">
                         <label for="status">Status PBB</label>
                         <input type="text" id="info_pbb" class="form-control m-0 w-100 fs-13" readonly>
                       </div>
-                      @endcan
                       </div>
                      
                   </div>

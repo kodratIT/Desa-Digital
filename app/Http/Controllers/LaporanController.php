@@ -100,7 +100,7 @@ class LaporanController extends Controller
             'pesan'     => $request->pesan
         ]);      
 
-        return redirect()->route('manage.laporan.index')->with('success','Berhasil Membuat Laporan');
+        return redirect()->route('manage.lporan.index')->with('success','Berhasil Membuat Laporan');
     }
 
     /**
@@ -114,7 +114,7 @@ class LaporanController extends Controller
         $url = decrypt($id);
         $data = ModelLaporan::find($url);
         $breadcrumb = 'Detail';
-        return view('pages.laporan.show',compact('breadcrumb','data'));
+        return view('pages.Laporan.show',compact('breadcrumb','data'));
     }
     
     /**
