@@ -165,30 +165,30 @@
                         </li>
                     </ul>
                 </li>
-                <li class="sub-category">
-                    <h3>More Tools</h3>
-                </li>
-                <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="#"><i
-                            class="side-menu__icon fe fe-settings"></i><span
-                            class="side-menu__label">Setting</span><i
-                            class="angle fe fe-chevron-right"></i>
-                    </a>
-                    <ul class="slide-menu">
-                        <li class="panel sidetab-menu">
-                            <div class="panel-body tabs-menu-body p-0 border-0">
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="side1">
-                                        <ul class="sidemenu-list">
-                                            <li class="side-menu-label1"><a href="javascript:void(0)">apps</a></li>
-                                            <li><a href="cards.html" class="slide-item"> Company Profile</a></li>
-                                        </ul>
+                    {{-- <li class="sub-category">
+                        <h3>More Tools</h3>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="#"><i
+                                class="side-menu__icon fe fe-settings"></i><span
+                                class="side-menu__label">Setting</span><i
+                                class="angle fe fe-chevron-right"></i>
+                        </a>
+                        <ul class="slide-menu">
+                            <li class="panel sidetab-menu">
+                                <div class="panel-body tabs-menu-body p-0 border-0">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="side1">
+                                            <ul class="sidemenu-list">
+                                                <li class="side-menu-label1"><a href="javascript:void(0)">apps</a></li>
+                                                <li><a href="cards.html" class="slide-item"> Company Profile</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
+                            </li>
+                        </ul>
+                    </li> --}}
                 @endcan
                
               

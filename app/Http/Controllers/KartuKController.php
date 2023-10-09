@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Models\ModelDesa;
 use App\Models\ModelRw;
 use App\Models\ModelFamily;
-
+use Illuminate\Support\Facades\Validator;
 class KartuKController extends Controller
 {
     /**
@@ -179,19 +179,96 @@ class KartuKController extends Controller
                     ->join('members_card_family','members_card_family.id','card_family.id')
                     ->join('users','users.id','=','members_card_family.user_id')
                     ->join('rukun_warga','rukun_warga.id','=','card_family.id_rw')
-                    ->select('members_card_family.name','members_card_family.no_nik as nik','users.created_at as dibuat','vilages.name_desa','rukun_tetangga.no_rt','rukun_warga.no_rw','users.phone')
+                    ->select('members_card_family.name','members_card_family.no_nik as nik','users.created_at as dibuat','vilages.name_desa','rukun_tetangga.no_rt','rukun_warga.no_rw','users.phone' , 'members_card_family.user_id')
                     ->get();
             // dd($data);
         }else{
-            $data = ModelKk::join('rukun_tetangga','rukun_tetangga.id','=','card_family.id_rt')
+
+             $data = ModelFamily::join('card_family','card_family.id','members_card_family.no_kk')
+                ->join('rukun_tetangga','rukun_tetangga.id','=','card_family.id_rt')
+                ->join('rukun_warga','rukun_warga.id','=','card_family.id_rw')
                 ->join('vilages','vilages.id','=','card_family.id_desa')
-                ->join('members_card_family','members_card_family.id','card_family.id')
-                ->join('users','users.id','=','members_card_family.user_id')
-                ->select('members_card_family.name','members_card_family.no_nik as nik','users.created_at as dibuat','vilages.name_desa','rukun_tetangga.no_rt')
+                ->select('members_card_family.name','members_card_family.id as id_nik','members_card_family.no_nik as nik','members_card_family.created_at as dibuat','vilages.name_desa','rukun_tetangga.no_rt','rukun_warga.no_rw', 'members_card_family.user_id')
                 ->get();
-            
+                           
         }
 
         return view('pages.datawarga.index',compact('breadcrumb','user','data'));
+    }
+
+    public function WargaCreate(){
+        $breadcrumb = "Create Warga";
+        $no_kk = ModelkK::all();
+
+        return view('pages.datawarga.create',compact('breadcrumb','no_kk'));
+    }
+
+    public function wargastore(Request $request){
+        $validator = $request->validate([
+            'id_kk' => 'required',
+            'no_nik' => 'required|max:16',
+            'name' => 'required|string',
+            'agama' => 'required|string',
+            'birt_place' => 'required|string',
+            'birth_day' => 'required|date',
+            'jenis_kelamin' => 'required|string',
+            'pendidikan' => 'required|string',
+            'pekerjaan' => 'required|string',
+            'status' => 'required|string',
+        ]);
+
+        $family = ModelFamily::create([
+            'no_kk' => $request->input('id_kk'),
+            'no_nik' => $request->input('no_nik'),
+            'name' => $request->input('name'),
+            'agama' => $request->input('agama'),
+            'tempat_lahir' => $request->input('birt_place'),
+            'tanggal_lahir' => $request->input('birth_day'),
+            'jenis_kelamin' => $request->input('jenis_kelamin'),
+            'pendidikan' => $request->input('pendidikan'),
+            'pekerjaan' => $request->input('pekerjaan'),
+            'status' => $request->input('status'),
+        ]);
+
+        // Redirect to a success page or wherever you need
+        return redirect()->route('manage.data.warga')->with('success', 'Data saved successfully!');
+
+    }
+
+    public function wargaedit($id){
+        $url = decrypt($id);
+
+        $data = ModelFamily::find($url);
+        $no_kk = ModelKk::all();
+        $breadcrumb = "Update Data Warga";
+
+        return view('pages.datawarga.update',compact('breadcrumb','data','no_kk'));
+    }
+
+    public function wargaupdate(Request $request,$id){
+
+        $validator = $request->validate([
+            'id_kk' => 'required',
+            'name' => 'required|string',
+            'agama' => 'required|string',
+            'pendidikan' => 'required|string',
+            'pekerjaan' => 'required|string',
+            'status' => 'required|string',
+        ]);
+
+        $url = decrypt($id);
+
+        $family= ModelFamily::find($url);
+        $family->update([
+            'no_kk' => $request->input('id_kk'),
+            'name'  =>$request->input('name'),
+            'agama' => $request->input('agama'),
+            'pendidikan' => $request->input('pendidikan'),
+            'pekerjaan' => $request->input('pekerjaan'),
+            'status' => $request->input('status'),
+        ]);
+
+        return redirect()->route('manage.data.warga')->with('success', 'Data saved successfully!');
+
     }
 }

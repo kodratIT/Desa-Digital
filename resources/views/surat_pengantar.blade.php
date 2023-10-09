@@ -88,7 +88,7 @@
                     <td class="px-2" >{{ $data->no_nik }}</td>
                 </tr>
                 <tr>
-                    <td>Tempat/tanggal lahir </td>
+                    <td>TTL </td>
                     <td></td>
                     <td class="px-2">:</td>
                     <td class="px-2">{{ $data->tempat_lahir }}/{{ formatDate($data->tanggal_lahir, 'd F Y') }}</td>
@@ -100,7 +100,7 @@
                     <td class="px-2" >{{ $data->agama }}</td>
                 </tr>
                 <tr>
-                    <td>Status Pernikahan</td>
+                    <td>Status</td>
                     <td></td>
                     <td class="px-2">:</td>
                     <td class="px-2">{{ $data->status }}</td>
@@ -129,9 +129,9 @@
                 <tr>
                     <td style="width: 50%;"></td>
                     <td>
-                        Pondok Meja,{{ formatDate($data->dibuat, 'd F Y') }} 
+                        {{ $admin->name_desa}},{{ formatDate($data->dibuat, 'd F Y') }} 
                         <p class="">Ketua RT. {{ $admin->no_rt }}</p>
-                        <img src="{{ asset('signature/' . $admin->signature) }}" alt="Signature" class="w-25" loading="lazy">
+                        <img src="data:image/jpeg;base64,{{ $imageData }}" alt="Image" class="w-25">
                         <P class="mt-1">{{ $admin->admin }}</P>
                     </td>
                 </tr>

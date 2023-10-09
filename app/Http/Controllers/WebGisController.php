@@ -20,8 +20,10 @@ class WebGisController extends Controller
         $breadcrumb = "WEB GIS";
         $niks = ModelFamily::select('members_card_family.id','members_card_family.no_nik','members_card_family.name')
             ->get();
+
+        $role = Auth()->User()->getRoleNames()->first();
     
-        return view('pages.WebGis.index',compact('breadcrumb','niks'));
+        return view('pages.WebGis.index',compact('breadcrumb','niks','role'));
     }
 
     public function json(){
@@ -118,9 +120,15 @@ class WebGisController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = ModelWebgisPbb::find($request->id);
+        $data->update([
+            'status' => $request->status,
+        ]); 
+
+        return redirect()->route('manage.webgis.index')->with('success', 'Data saved successfully!');
+
     }
 
     /**

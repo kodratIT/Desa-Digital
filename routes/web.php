@@ -12,6 +12,7 @@ use App\Http\Controllers\KartuKController;
 use App\Http\Controllers\DesaController;
 use App\Http\Controllers\RtController;
 use App\Http\Controllers\RwController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\WebGisController;
 /*
 |--------------------------------------------------------------------------
@@ -71,7 +72,13 @@ Route::name('manage.')->prefix('manage')->group(function () {
     route::get('/cetak-surat/{id}',[PengajuanSuratController::class,'CetakSurat'])->middleware('auth','permission:cetak.surat')->name('cetak.surat');
     //pengajuan
 
-    route::get('/data-warga',[KartuKController::class,'DataWarga'])->middleware('permission:data.warga')->name('data.warga');
+    route::get('/data-warga',[KartuKController::class,'DataWarga'])->middleware('auth','permission:data.warga')->name('data.warga');
+    route::get('/data-warga/create',[KartuKController::class,'Wargacreate'])->middleware('auth','permission:datawarga.create')->name('datawarga.create');
+    route::post('/data-warga/store',[KartuKController::class,'Wargastore'])->middleware('auth','permission:datawarga.create')->name('datawarga.store');
+    route::put('/data-warga/update/{id}',[KartuKController::class,'Wargaupdate'])->middleware('auth','permission:datawarga.edit')->name('datawarga.update');
+    route::get('/data-warga/edit/{id}',[KartuKController::class,'Wargaedit'])->middleware('auth','permission:datawarga.edit')->name('datawarga.edit');
+    Route::get('/import', [ImportController::class,'index'])->middleware('auth','permission:import.excel')->name('import.index');
+    Route::post('/import/store', [ImportController::class,'store'])->middleware('auth','permission:import.save')->name('import.store');
 
     // route::resource('/laporan',LaporanController::class);
     route::get('/laporan',[LaporanController::class,'index'])->middleware('auth','permission:laporan.index')->name('laporan.index');
@@ -92,6 +99,7 @@ Route::name('manage.')->prefix('manage')->group(function(){
     Route::get('/webgis-pbb',[WebGisController::class,'index'])->middleware('auth','permission:webgis.index')->name('webgis.index');
     Route::get('/webgis-pbb/create',[WebGisController::class,'create'])->middleware('auth','permission:webgis.create')->name('webgis.create');
     Route::post('/webgis-pbb/store',[WebGisController::class,'store'])->middleware('auth','permission:webgis.create')->name('webgis.store');
+    Route::put('/webgis-pbb/update',[WebGisController::class,'update'])->middleware('auth','permission:webgis.update')->name('webgis.update');
     Route::get('/webgis-pbb/json',[WebGisController::class,'json'])->middleware('auth')->name('json-data');
 });
 

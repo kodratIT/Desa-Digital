@@ -36,7 +36,7 @@ class PengajuanSuratController extends Controller
                         ->join('users','users.id','=','pengajuan_surat.id_user')
                         ->join('members_card_family','members_card_family.user_id','users.id')
                         ->join('typeletter','typeletter.id','pengajuan_surat.id_jenis_surat')
-                        ->select('members_card_family.name','pengajuan_surat.status_surat','pengajuan_surat.created_at','typeletter.name as nama_surat')
+                        ->select('members_card_family.name','pengajuan_surat.status_surat','pengajuan_surat.created_at','typeletter.name as nama_surat','pengajuan_surat.id as id')
                         ->get();
                 }
 
@@ -50,6 +50,7 @@ class PengajuanSuratController extends Controller
                 ->select('pengajuan_surat.*','members_card_family.name','members_card_family.no_nik','typeletter.name as nama_surat','vilages.name_desa','rukun_tetangga.no_rt')
                 ->get();           
             }
+
             return view('pages.pengajuan.index',compact('breadcrumb','user','pengajuan'));
 
         }else{
@@ -169,7 +170,6 @@ class PengajuanSuratController extends Controller
     public function CetakSurat($id){
 
         $url = decrypt($id);
-        
         $data = ModelPengajuan::where('pengajuan_surat.id',$url)
         ->join('users','users.id','=','pengajuan_surat.id_user')
         ->join('members_card_family','members_card_family.user_id','users.id')
@@ -180,7 +180,8 @@ class PengajuanSuratController extends Controller
         ->select('members_card_family.*','typeletter.name as jenis_surat','pengajuan_surat.created_at as dibuat','card_family.alamat_kk','pengajuan_surat.pesan')
         ->first();
         
-        $admin = ModelPengajuan::where('pengajuan_surat.id',$url)
+        
+        $admin = ModelPengajuan::where('pengajuan_surat.id',$url) 
         ->join('users','users.id','=','pengajuan_surat.id_admin')
         ->join('members_card_family','members_card_family.user_id','users.id')
         ->join('card_family','card_family.id','=','members_card_family.no_kk')
@@ -188,12 +189,20 @@ class PengajuanSuratController extends Controller
         ->join('rukun_tetangga','rukun_tetangga.id','=','card_family.id_rt')
         ->select('members_card_family.name as admin','rukun_tetangga.no_rt','vilages.name_desa','users.digital_signature as signature')
         ->first();
-
+        
+        // dd($admin);
         // return view('surat_pengantar',compact('data','admin'));
-        $pdf = PDF::loadView('surat_pengantar', compact('data','admin'));
+        // // dd($url);
+       
+        // Get the base64-encoded image data
+        $imageData = base64_encode(file_get_contents('signature/'.$admin->signature));
+        $pdf = PDF::loadView('surat_pengantar', compact('data','admin'),array('imageData' => $imageData));
+        
         $pdf->setPaper('A4');
 
-        return $pdf->stream('surat_pengantar.pdf');
+        // Pass the image data to the view
+        return $pdf->stream('surat_pengantar.pdf', );
+
 
         // return view('P/')
     }

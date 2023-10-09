@@ -21,7 +21,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::join('members_card_family','members_card_family.user_id','=','users.id')
+            ->select('users.*','members_card_family.name')
+            ->get();
         $breadcrumb = "Users";
         return view('pages.users.index',compact('breadcrumb','users'));
     }

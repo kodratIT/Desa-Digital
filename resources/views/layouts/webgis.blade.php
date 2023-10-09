@@ -24,16 +24,30 @@
             z-index: 0;
         }
 
-      .box{
-        height: 95vh;
-        width: 400px;
-        position: absolute;
-        right: 0;
-        z-index: 9999;  
-        padding: 40px 40px 0px 40px;
-        
-      }
+        .box {
+          margin: 10px;
+          height: 95vh;
+          width: 400px;
+          position: absolute;
+          right: 0;
+          z-index: 9999;  
+          padding: 40px 40px 0px 40px;
+          box-sizing: border-box;
+        }
 
+        /* Media query for screens between 992px and 1199px (medium-sized to large tablets) */
+        @media (min-width: 360px) and (max-width: 970px) {
+          .box {
+            margin:0;
+            position: absolute;
+            right: 0;
+            z-index: 9999;  
+            /* padding: 40px 40px 0px 40px; */
+            box-sizing: border-box;
+            width: 100%; /* Adjust the width */
+            height: auto;
+          }
+        }
       .close{
         font-size: 20px;
         position: absolute;

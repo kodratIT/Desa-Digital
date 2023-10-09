@@ -93,10 +93,10 @@ class HomeController extends Controller
             $result = User::all();
             $result1 = ModelPengajuan::all();
             $result2 = ModelKk::all();
-            
+            $result3 = ModelLaporan::all()->count();
             $jumlahWarga = $result->count();
             $jmhpengajuan = $result1->count();
-            $jmhlaporan =0;
+            $jmhlaporan =$result3;
             $jmhkk = $result2->count();
             return view('pages.index',compact('breadcrumb','user','jumlahWarga','jmhpengajuan','jmhlaporan','jmhkk'));
 

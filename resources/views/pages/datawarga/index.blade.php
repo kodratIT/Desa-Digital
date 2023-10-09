@@ -15,6 +15,15 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">List Data Warga</h3>
+                        <span class="mx-auto"></span>
+                        @can('datawarga.create')
+                        <a href="{{ route('manage.import.index') }}" class="btn btn-secondary mb-2 mx-3 ">
+                            Import
+                        </a>
+                        <a href="{{ route('manage.datawarga.create') }}" class="btn btn-success mb-2 ">
+                            Tambah
+                        </a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         @error ('massage')
@@ -33,6 +42,7 @@
                                         <th>RT/RW</th>
                                         <th>Desa</th>
                                         <th>Dibuat</th>
+                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -45,18 +55,23 @@
                                         <td>{{ $i->no_rt }}/{{ $i->no_rw }}</td>
                                         <td>{{ $i->name_desa }}</td>
                                         <td>{{ formatDate($i->dibuat) }}</td>
+                                        <td >
+                                            @if ($i->user_id != null)
+                                                <span class="badge bg-success">Active</span>
+                                                @else
+                                                <span class="badge bg-warning">TidaK Active</span>
+                                            @endif
+                                        </td>
+                                        <td class="d-flex justify-content-center border-0">
+                                           <a href="https://wa.me/{{ $i->phone }}" class="btn btn-sm btn-secondary fs-10">  <i class="fe fe-phone"></i></a>
                                         @can('data.warga.update')
-                                            <td class="d-flex justify-content-center border-0">
-                                            <a href="{{route('admin.roles.edit',1)}}" class="btn btn-sm btn-primary badge  mx-2"><i class="fe fe-edit"></i></a>
-                                            <form action="{{route('admin.roles.destroy',1)}}" method="post" class="inline-block">
+                                            <a href="{{route('manage.datawarga.edit',Crypt::encrypt($i->id_nik))}}" class="btn btn-sm btn-primary badge  mx-2"><i class="fe fe-edit"></i></a>
+                                            {{-- <form action="{{route('admin.roles.destroy',1)}}" method="post" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-sm btn-danger badge " type="submit" name="action"><i class="fa fa-trash"></i></button>
-                                            </form>
-                                        </td>
-                                        @endcan
-                                        <td>
-                                            <a href="https://wa.me/{{ $i->phone }}" class="btn btn-sm btn-success fs-10">  <i class="fe fe-phone"></i></a>
+                                            </form> --}}
+                                            @endcan
                                         </td>
                                      </tr>
                                      @endforeach

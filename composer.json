@@ -12,6 +12,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
+        "maatwebsite/excel": "^3.1",
         "spatie/laravel-permission": "^5.10"
     },
     "require-dev": {
