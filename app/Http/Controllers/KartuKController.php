@@ -27,7 +27,7 @@ class KartuKController extends Controller
         $let = ModelKk::first();
         $breadcrumb = "Kartu Keluarga";
         $user = Auth()->User();
-        return view('pages.Kartu-keluarga.index',compact('breadcrumb','user','Kk','let'));
+        return view('pages.kartu-keluarga.index',compact('breadcrumb','user','Kk','let'));
     }
 
     /**
